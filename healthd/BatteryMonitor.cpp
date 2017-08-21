@@ -307,12 +307,13 @@ bool BatteryMonitor::update(void) {
                                              name);
                             }
                             path.clear();
-                            path.appendFormat("%s/%s/current_max", POWER_SUPPLY_SYSFS_PATH,
-                                              name);
+                            path.appendFormat("%s/battery/fastchg_status", POWER_SUPPLY_SYSFS_PATH);
                             if (access(path.string(), R_OK) == 0) {
                                 int maxChargingCurrent = getIntField(path);
-                                if (props.maxChargingCurrent < maxChargingCurrent) {
-                                    props.maxChargingCurrent = maxChargingCurrent;
+                                if (maxChargingCurrent == 1) {
+                                    props.maxChargingCurrent = 4000000;
+                                } else {
+                                    props.maxChargingCurrent = 500000;
                                 }
                             }
                         }
