@@ -120,3 +120,8 @@ include $(BUILD_PHONY_PACKAGE)
 
 _add-charger-image :=
 _img_modules :=
+
+ifeq ($(strip$(USE_FASTCHG_STATUS)),true)
+LOCAL_CFLAGS += -DUSE_FASTCHG_STATUS
+endif
+
